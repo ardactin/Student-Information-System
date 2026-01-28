@@ -54,6 +54,8 @@ To run the project locally, follow these steps:
 ![Login Screen](screenshots/login.png)
 ![Admin Dashboard](screenshots/admin.png)
 ![Student Panel](screenshots/student.png)
+![Instructor Panel](screenshots/instructor.png)
+
 
 ## Project Purpose
 This project was developed to demonstrate MVC architecture, database design, role-based authorization, and real-world CRUD operations using ASP.NET Core and SQL Server.
