@@ -1,8 +1,8 @@
 # Course Registration and Grade Tracking System
 
-This project is a Course Registration and Grade Tracking System designed to manage university course enrollment and grading processes in a secure and structured manner.
+This project is a Course Registration and Grade Tracking System developed to manage university course enrollment and grading processes in a secure and structured manner.
 
-The system is built with role-based access control and supports three user roles: Admin, Student, and Instructor. Each role can only perform actions within its authorization scope, ensuring data security and system integrity.
+The system supports three different user roles: Admin, Student, and Instructor. Each role can only perform actions within its authorization scope, ensuring role-based access control and data security.
 
 ## Technologies
 - ASP.NET Core MVC
@@ -10,6 +10,9 @@ The system is built with role-based access control and supports three user roles
 - SQL Server
 - Entity Framework Core
 - HTML, CSS, Bootstrap
+
+## Database Design
+The system uses a custom-designed SQL Server database created specifically for this project. All tables and relationships were designed manually, and the application accesses the database through Entity Framework Core.
 
 ## User Roles and Features
 
@@ -29,7 +32,7 @@ The system is built with role-based access control and supports three user roles
 
 ### Instructor
 - View assigned courses
-- View students enrolled in their courses
+- View enrolled students
 - Enter and update student grades
 
 ## CRUD Operations
@@ -38,14 +41,16 @@ The system is built with role-based access control and supports three user roles
 - **Update:** Grade updates  
 - **Delete:** Student deletion  
 
-## Challenges and Solutions
-- Unauthorized page access was prevented using session-based authorization.
-- Duplicate course registration was avoided using database-level constraints and validation checks.
-- Null reference errors were resolved with proper model validation and safe data handling.
+## Installation
+To run the project locally, follow these steps:
+
+1. Clone the repository or download it as a ZIP file.
+2. Update the `ConnectionStrings` section in the `appsettings.json` file according to your local SQL Server configuration.
+3. Open the **Package Manager Console** in Visual Studio.
+4. Run the following command to create the database:
+5. Run the project.
 
 ## Screenshots
-> Screenshots are included to demonstrate the user interface and system flow.
-
 ![Login Screen](screenshots/login.png)
 ![Admin Dashboard](screenshots/admin.png)
 ![Student Panel](screenshots/student.png)
