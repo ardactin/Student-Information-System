@@ -6,12 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// --- EKLENEN KRÝTÝK KISIM ---
-// Layout sayfasýnda (View tarafýnda) Session okumak için bu servis ÞART:
+// Needed so that views (e.g. _Layout) can read session values
 builder.Services.AddHttpContextAccessor();
-// ----------------------------
-
-builder.Services.AddSession(); // Sende zaten vardý, aynen kalýyor.
+builder.Services.AddSession();
 
 builder.Services.AddDbContext<OdevContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -31,7 +28,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Session middleware'i Routing ile Authorization arasýnda olmalý (Sende doðru yerde)
+// Session must be registered between routing and authorization
 app.UseSession();
 
 app.UseAuthorization();

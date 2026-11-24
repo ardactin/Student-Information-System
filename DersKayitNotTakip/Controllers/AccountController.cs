@@ -33,7 +33,7 @@ namespace DersKayitNotTakip.Controllers
                 return View();
             }
 
-            // --- SESSION AYARLARI (BURAYI GÜNCELLEDİM) ---
+            // --- SESSION ---
 
             // Temel bilgileri Session'a atıyoruz
             HttpContext.Session.SetInt32("KullaniciID", kullanici.KullaniciId);

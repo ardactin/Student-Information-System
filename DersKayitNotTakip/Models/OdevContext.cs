@@ -36,8 +36,14 @@ public partial class OdevContext : DbContext
     public virtual DbSet<Yetki> Yetkis { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ODEV;Trusted_Connection=True;TrustServerCertificate=True;");
+    {
+        // Fallback only for design-time tools; at runtime the connection string
+        // comes from appsettings.json (see Program.cs).
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ODEV;Trusted_Connection=True;TrustServerCertificate=True;");
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

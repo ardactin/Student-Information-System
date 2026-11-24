@@ -19,7 +19,8 @@ The system uses a custom-designed SQL Server database created specifically for t
 ### Admin
 - Add, update, and delete students
 - Add, update, and delete instructors
-- Add courses
+- Add and delete courses
+- Open course offerings for a term
 - Assign instructors to courses
 - Manage departments
 - View student and instructor lists
@@ -41,14 +42,31 @@ The system uses a custom-designed SQL Server database created specifically for t
 - **Update:** Grade updates  
 - **Delete:** Student deletion  
 
-## Installation
-To run the project locally, follow these steps:
+## Highlights
+- **Role-based access:** session-based login that routes each user to the Admin, Student or Instructor panel; each panel checks the session and redirects unauthenticated users to login
+- **Relational schema** with 10 tables and foreign keys (departments, courses, course offerings, terms, enrollments, grades, users, roles)
+- **Grades computed in the database:** `Ortalama` (average) and `HarfNotu` (letter grade) are SQL Server computed columns, so they can never drift from the raw midterm, final and make-up scores
+- **Business rules:** students can only enroll in courses of their own department and cannot register for the same course twice
 
-1. Clone the repository or download it as a ZIP file.
-2. Update the `ConnectionStrings` section in the `appsettings.json` file according to your local SQL Server configuration.
-3. Open the **Package Manager Console** in Visual Studio.
-4. Run the following command to create the database:
-5. Run the project.
+## Installation
+Requirements: .NET 8 SDK, SQL Server (Express is enough), Visual Studio 2022.
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ardactin/Student-Information-System.git
+   ```
+2. Set your connection string in `DersKayitNotTakip/appsettings.json` (`ConnectionStrings:DefaultConnection`). The default points to a local `.\SQLEXPRESS` instance.
+3. Create the database from the EF Core model. In Visual Studio's **Package Manager Console**:
+   ```powershell
+   Add-Migration InitialCreate
+   Update-Database
+   ```
+4. Add the roles and a first admin account:
+   ```sql
+   INSERT INTO Yetki (YetkiAdi) VALUES ('Admin'), ('Ogrenci'), ('OgretimUyesi');
+   INSERT INTO Kullanici (KullaniciAdi, Sifre, YetkiID) VALUES ('admin', 'admin123', 1);
+   ```
+5. Run the project and log in as `admin`. Students and instructors can then be created from the admin panel.
 
 ## Screenshots
 ![Login Screen](screenshots/login.png)
@@ -60,5 +78,10 @@ To run the project locally, follow these steps:
 ## Project Purpose
 This project was developed to demonstrate MVC architecture, database design, role-based authorization, and real-world CRUD operations using ASP.NET Core and SQL Server.
 
+## Possible Improvements
+- Hash passwords (e.g. ASP.NET Core `PasswordHasher`) instead of storing them as plain text
+- Replace session checks with ASP.NET Core Identity and `[Authorize]` attributes
+- Add unit tests for the enrollment rules
+
 ## Note
-This project was developed for educational purposes.
+Developed as a 3-person team project for a university course.
